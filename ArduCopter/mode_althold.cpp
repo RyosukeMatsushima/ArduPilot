@@ -14,6 +14,8 @@ bool ModeAltHold::init(bool ignore_checks)
         pos_control->set_desired_velocity_z(inertial_nav.get_velocity_z());
     }
 
+    gcs().send_text(MAV_SEVERITY_INFO, "alt_hold!?");
+
     return true;
 }
 
@@ -107,4 +109,9 @@ void ModeAltHold::run()
     // call z-axis position controller
     pos_control->update_z_controller();
 
+    uint32_t ms = millis();
+    if (last_log_ms - ms > 1000) {
+        gcs().send_text(MAV_SEVERITY_INFO, "alt_hold!?");
+        last_log_ms = ms;
+    }
 }

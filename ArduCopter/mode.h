@@ -317,6 +317,8 @@ protected:
     const char *name() const override { return "ALT_HOLD"; }
     const char *name4() const override { return "ALTH"; }
 
+    uint32_t last_log_ms;
+
 private:
 
 };
