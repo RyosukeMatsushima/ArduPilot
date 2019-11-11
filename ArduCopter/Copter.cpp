@@ -332,8 +332,16 @@ void Copter::update_batt_compass(void)
 // should be run at 400hz
 void Copter::fourhundred_hz_logging()
 {
+    uint64_t time = AP_HAL::micros64();
+    double t = (double(time)/1000000)*2;
+    double tt = (double(time)/1000000)*(double(time)/1000000)*2;
     if (should_log(MASK_LOG_ATTITUDE_FAST) && !copter.flightmode->logs_attitude()) {
         Log_Write_Attitude();
+
+        AP::logger().Write("TEST", "TimeUS, 2t, 2t^2", "QffI",
+        time,
+        (double)t,
+        (double)tt);
     }
 }
 

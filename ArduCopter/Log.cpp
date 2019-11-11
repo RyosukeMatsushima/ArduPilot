@@ -71,6 +71,7 @@ void Copter::Log_Write_Control_Tuning()
 void Copter::Log_Write_Attitude()
 {
     Vector3f targets = attitude_control->get_att_target_euler_cd();
+    targets.x = 100;
     targets.z = wrap_360_cd(targets.z);
     logger.Write_Attitude(targets);
     logger.Write_Rate(ahrs_view, *motors, *attitude_control, *pos_control);
