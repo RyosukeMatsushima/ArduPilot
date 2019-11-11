@@ -230,6 +230,7 @@ public:
     friend class ModeSystemId;
     friend class ModeThrow;
     friend class ModeZigZag;
+    friend class ModeAltHoldRF;
 
     Copter(void);
 
@@ -915,6 +916,7 @@ private:
 #endif
 #endif
     ModeAltHold mode_althold;
+    ModeAltHoldRF mode_althold_rf;
 #if MODE_AUTO_ENABLED == ENABLED
     ModeAuto mode_auto;
 #endif

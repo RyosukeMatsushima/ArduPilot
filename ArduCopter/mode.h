@@ -36,6 +36,7 @@ public:
         FOLLOW    =    23,  // follow attempts to follow another vehicle or ground station
         ZIGZAG    =    24,  // ZIGZAG mode is able to fly in a zigzag manner with predefined point A and point B
         SYSTEMID  =    25,  // System ID mode produces automated system identification signals in the controllers
+        ALT_HOLD_RF =  26,  // manual airframe angle with altitude control by lidar
     };
 
     // constructor
@@ -1391,4 +1392,30 @@ private:
     } stage;
 
     uint32_t reach_wp_time_ms = 0;  // time since vehicle reached destination (or zero if not yet reached)
+};
+
+class ModeAltHoldRF : public Mode {
+
+public:
+    // inherit constructor
+    using Mode::Mode;
+
+    bool init(bool ignore_checks) override;
+    void run() override;
+
+    bool requires_GPS() const override { return false; }
+    bool has_manual_throttle() const override { return false; }
+    bool allows_arming(bool from_gcs) const override { return true; };
+    bool is_autopilot() const override { return false; }
+    bool has_user_takeoff(bool must_navigate) const override {
+        return !must_navigate;
+    }
+
+protected:
+
+    const char *name() const override { return "ALT_HOLD_RF"; }
+    const char *name4() const override { return "ALTHRF"; }
+
+private:
+
 };
