@@ -741,6 +741,11 @@ float Mode::get_pilot_desired_climb_rate(float throttle_control)
     return copter.get_pilot_desired_climb_rate(throttle_control);
 }
 
+float Mode::get_pilot_desired_alt(float channel_in, float max_alt, float min_alt)
+{
+    return copter.get_pilot_desired_alt(channel_in, max_alt, min_alt);
+}
+
 float Mode::get_non_takeoff_throttle()
 {
     return copter.get_non_takeoff_throttle();

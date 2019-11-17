@@ -57,8 +57,8 @@ void ModeStabilize::run()
     // call attitude controller
     attitude_control->input_euler_angle_roll_pitch_euler_rate_yaw(target_roll, target_pitch, target_yaw_rate);
 
-    // output pilot's throttle
-    attitude_control->set_throttle_out(get_pilot_desired_throttle(),
-                                       true,
-                                       g.throttle_filt);
+    // altitude control by lidar
+    float target_alt_by_lidar = get_pilot_desired_alt(channel_throttle->get_control_in(), 2, 0.5);
+    pos_control->set_alt_target(target_alt_by_lidar);
+    pos_control->update_z_controller_by_lidar(float(get_alt_above_ground_cm()));
 }

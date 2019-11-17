@@ -236,6 +236,7 @@ public:
     // these are candidates for moving into the Mode base
     // class.
     float get_pilot_desired_climb_rate(float throttle_control);
+    float get_pilot_desired_alt(float channel_in, float max_alt, float min_alt);
     float get_non_takeoff_throttle(void);
     void update_simple_mode(void);
     bool set_mode(Mode::Number mode, ModeReason reason);
