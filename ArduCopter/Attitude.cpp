@@ -118,6 +118,25 @@ float Copter::get_pilot_desired_climb_rate(float throttle_control)
     return desired_rate;
 }
 
+// get_pilot_desired_altitude - transform pilot's throttle input to altotude in cm
+// without any deadzone at the bottom
+float Copter::get_pilot_desired_alt(float channel_in, float max_alt, float min_alt)
+{
+
+#if TOY_MODE_ENABLED == ENABLED
+    if (g2.toy_mode.enabled()) {
+        // allow throttle to be reduced after throttle arming and for
+        // slower descent close to the ground
+        g2.toy_mode.throttle_adjust(throttle_control);
+    }
+#endif
+
+    // ensure a reasonable throttle value
+    channel_in = constrain_float(channel_in,0.0f,1000.0f);
+
+    return min_alt + channel_in/1000 * (max_alt - min_alt);
+}
+
 // get_non_takeoff_throttle - a throttle somewhere between min and mid throttle which should not lead to a takeoff
 float Copter::get_non_takeoff_throttle()
 {

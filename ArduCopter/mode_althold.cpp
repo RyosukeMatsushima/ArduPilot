@@ -87,13 +87,27 @@ void ModeAltHold::run()
         copter.avoid.adjust_roll_pitch(target_roll, target_pitch, copter.aparm.angle_max);
 #endif
 
+        uint16_t ch6_in = RC_Channels::get_radio_in(CH_6);
+
+        copter.surface_tracking.set_surface(Copter::SurfaceTracking::Surface::GROUND);
+
+        // altitude control by lidar
+        float target_alt_by_lidar = get_pilot_desired_alt(float(ch6_in) - 1000, 200, 50);
+        copter.surface_tracking.set_target_alt_cm(target_alt_by_lidar);
+
         // adjust climb rate using rangefinder
-        target_climb_rate = copter.surface_tracking.adjust_climb_rate(target_climb_rate);
+        target_climb_rate = copter.surface_tracking.adjust_climb_rate(0);
 
         // get avoidance adjusted climb rate
         target_climb_rate = get_avoidance_adjusted_climbrate(target_climb_rate);
 
         pos_control->set_alt_target_from_climb_rate_ff(target_climb_rate, G_Dt, false);
+
+        if(millis()%1000 == 0)
+    {
+        gcs().send_text(MAV_SEVERITY_CRITICAL, "target alt %f", float(pos_control->get_alt_target()));
+        gcs().send_text(MAV_SEVERITY_CRITICAL, "alt %f", float(get_alt_above_ground_cm()));
+    }
         break;
     }
 

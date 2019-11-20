@@ -57,8 +57,16 @@ void ModeStabilize::run()
     // call attitude controller
     attitude_control->input_euler_angle_roll_pitch_euler_rate_yaw(target_roll, target_pitch, target_yaw_rate);
 
-    // output pilot's throttle
-    attitude_control->set_throttle_out(get_pilot_desired_throttle(),
-                                       true,
-                                       g.throttle_filt);
+    uint16_t ch6_in = RC_Channels::get_radio_in(CH_6);
+
+    // altitude control by lidar
+    float target_alt_by_lidar = get_pilot_desired_alt(float(ch6_in) - 1000, 200, 50);
+    pos_control->set_alt_target(target_alt_by_lidar);
+    pos_control->update_z_controller_by_lidar(float(get_alt_above_ground_cm()));
+
+    if(millis()%1000 == 0)
+    {
+        gcs().send_text(MAV_SEVERITY_CRITICAL, "target alt %f", target_alt_by_lidar);
+        gcs().send_text(MAV_SEVERITY_CRITICAL, "alt %f", float(get_alt_above_ground_cm()));
+    }
 }
