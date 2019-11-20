@@ -57,8 +57,10 @@ void ModeStabilize::run()
     // call attitude controller
     attitude_control->input_euler_angle_roll_pitch_euler_rate_yaw(target_roll, target_pitch, target_yaw_rate);
 
+    uint16_t ch6_in = RC_Channels::get_radio_in(CH_6);
+
     // altitude control by lidar
-    float target_alt_by_lidar = get_pilot_desired_alt(channel_throttle->get_control_in(), 200, 50);
+    float target_alt_by_lidar = get_pilot_desired_alt(float(ch6_in) - 1000, 200, 50);
     pos_control->set_alt_target(target_alt_by_lidar);
     pos_control->update_z_controller_by_lidar(float(get_alt_above_ground_cm()));
 
