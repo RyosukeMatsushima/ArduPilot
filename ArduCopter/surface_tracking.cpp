@@ -53,6 +53,11 @@ float Copter::SurfaceTracking::adjust_climb_rate(float target_rate)
     velocity_correction = constrain_float(velocity_correction, -SURFACE_TRACKING_VELZ_MAX, SURFACE_TRACKING_VELZ_MAX);
 
     // return combined pilot climb rate + rate to correct rangefinder alt error
+
+    if(millis()%1000 == 0)
+    {
+        copter.gcs().send_text(MAV_SEVERITY_CRITICAL, "rf enable %f", (float)target_dist_cm);
+    }
     return (target_rate + velocity_correction);
 #else
     return target_rate;
