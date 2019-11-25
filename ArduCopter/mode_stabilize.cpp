@@ -60,7 +60,7 @@ void ModeStabilize::run()
     uint16_t ch6_in = RC_Channels::get_radio_in(CH_6);
 
     // altitude control by lidar
-    float target_alt_by_lidar = get_pilot_desired_alt(float(ch6_in) - 1000, 200, 50);
+    float target_alt_by_lidar = get_pilot_desired_alt(float(ch6_in) - 1000, copter.g.lidar_alt_max_cm, copter.g.lidar_alt_min_cm);
     pos_control->set_alt_target(target_alt_by_lidar);
     pos_control->update_z_controller_by_lidar(float(get_alt_above_ground_cm()));
 

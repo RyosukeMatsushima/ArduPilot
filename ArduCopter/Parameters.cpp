@@ -104,6 +104,10 @@ const AP_Param::Info Copter::var_info[] = {
     // @Bitmask: 0:Roll,1:Pitch,2:Yaw,3:AccelZ
     GSCALAR(gcs_pid_mask,           "GCS_PID_MASK",     0),
 
+    GSCALAR(lidar_alt_min_cm, "LIDAR_ALT_MIN_CM", LIDAR_ALT_MIN_CM_DEFAULT),
+
+    GSCALAR(lidar_alt_max_cm, "LIDAR_ALT_MAX_CM", LIDAR_ALT_XAX_CM_DEFAULT),
+
 #if MODE_RTL_ENABLED == ENABLED
     // @Param: RTL_ALT
     // @DisplayName: RTL Altitude

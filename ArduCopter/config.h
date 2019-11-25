@@ -463,6 +463,14 @@
 # define LAND_DETECTOR_ACCEL_MAX            1.0f    // vehicle acceleration must be under 1m/s/s
 #endif
 
+#ifndef LIDAR_ALT_MIN_CM_DEFAULT
+ #define LIDAR_ALT_MIN_CM_DEFAULT   50.0f
+#endif
+
+#ifndef LIDAR_ALT_MAX_CM_DEFAULT
+ #define LIDAR_ALT_XAX_CM_DEFAULT   100.0f
+#endif
+
 //////////////////////////////////////////////////////////////////////////////
 // CAMERA TRIGGER AND CONTROL
 //
