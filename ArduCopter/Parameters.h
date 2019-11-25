@@ -371,6 +371,9 @@ public:
         k_param_arming, // 252  - AP_Arming
         k_param_logger = 253, // 253 - Logging Group
 
+        k_param_lidar_alt_min_cm = 256,
+        k_param_lidar_alt_max_cm = 257,
+
         // 254,255: reserved
 
         // the k_param_* space is 9-bits in size
@@ -464,6 +467,9 @@ public:
     AP_Float                acro_balance_pitch;
     AP_Int8                 acro_trainer;
     AP_Float                acro_rp_expo;
+
+    AP_Float                lidar_alt_min_cm;
+    AP_Float                lidar_alt_max_cm;
 
     // Note: keep initializers here in the same order as they are declared
     // above.
